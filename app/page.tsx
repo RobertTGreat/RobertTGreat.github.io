@@ -64,67 +64,67 @@ export default function Home() {
         <div className="h-12" />
 
         {/* Hero */}
-        <header className="w-full max-w-7xl mx-auto flex flex-col items-center py-16 lg:py-24 text-center gap-6">
-          <p className="text-[11px] font-mono uppercase tracking-[0.28em] text-white/35">
+        <header className="w-full max-w-7xl mx-auto flex flex-col items-center py-12 sm:py-16 lg:py-24 text-center gap-5 sm:gap-6">
+          <p className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.24em] sm:tracking-[0.28em] text-white/35">
             Portfolio
           </p>
-          <h1 className="font-display text-5xl sm:text-7xl lg:text-8xl font-bold tracking-[0.12em] sm:tracking-[0.18em] text-white leading-none">
+          <h1 className="font-display text-4xl xs:text-5xl sm:text-7xl lg:text-8xl font-bold tracking-[0.1em] sm:tracking-[0.18em] text-white leading-none">
             ROBERT
           </h1>
-          <p className="text-sm sm:text-base text-white/40 font-light max-w-md leading-relaxed">
+          <p className="text-xs sm:text-base text-white/45 font-light max-w-md leading-relaxed px-2">
             Software, tools, and design — personal work, Pleiades products, and
             visual craft.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2 text-[12px] font-mono text-white/35">
+          <div className="flex flex-wrap items-center justify-center gap-x-4 sm:gap-x-5 gap-y-2 text-[11px] sm:text-[12px] font-mono text-white/35">
             <span className="inline-flex items-center gap-1.5">
-              <MapPin className="w-3.5 h-3.5 text-white/25" />
+              <MapPin className="w-3.5 h-3.5 text-white/25 shrink-0" />
               {LOCATION}
             </span>
             <a
               href={`mailto:${EMAIL}`}
-              className="inline-flex items-center gap-1.5 hover:text-white/70 transition-colors"
+              className="inline-flex items-center gap-1.5 hover:text-white/70 transition-colors break-all"
             >
-              <Mail className="w-3.5 h-3.5 text-white/25" />
+              <Mail className="w-3.5 h-3.5 text-white/25 shrink-0" />
               {EMAIL}
             </a>
           </div>
 
-          <div className="flex items-center gap-3 mt-2">
+          <div className="flex items-center gap-3 mt-1">
             <a
               href={GITHUB}
               target="_blank"
               rel="noreferrer"
-              className="white-shine-btn p-4 cursor-pointer"
+              className="white-shine-btn p-3.5 sm:p-4 cursor-pointer"
               aria-label="GitHub profile"
             >
-              <Github className="w-6 h-6" />
+              <Github className="w-5 h-5 sm:w-6 sm:h-6" />
             </a>
             <a
               href={PLEIADES}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center px-4 py-3 text-sm font-medium text-white/50 hover:text-white border border-white/[0.08] hover:border-white/[0.16] rounded-lg bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300"
+              className="inline-flex items-center px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium text-white/50 hover:text-white border border-white/[0.08] hover:border-white/[0.16] rounded-lg bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300"
             >
               pleiades.org.uk
             </a>
           </div>
 
           {/* Jump links */}
-          <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2 mt-4 text-[11px] font-mono uppercase tracking-[0.16em] text-white/30">
-            <a href="#projects" className="hover:text-white/70 transition-colors">
+          <nav className="flex flex-wrap justify-center gap-x-2 sm:gap-x-6 gap-y-1.5 mt-3 text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.14em] sm:tracking-[0.16em] text-white/35">
+            <a href="#projects" className="px-2.5 py-1 rounded-md hover:bg-white/[0.05] hover:text-white/70 transition-colors">
               Projects
             </a>
-            <a href="#pleiades" className="hover:text-white/70 transition-colors">
+            <a href="#pleiades" className="px-2.5 py-1 rounded-md hover:bg-white/[0.05] hover:text-white/70 transition-colors">
               Pleiades
             </a>
-            <a href="#papers" className="hover:text-white/70 transition-colors">
+            <a href="#papers" className="px-2.5 py-1 rounded-md hover:bg-white/[0.05] hover:text-white/70 transition-colors">
               Papers
             </a>
-            <a href="#design" className="hover:text-white/70 transition-colors">
+            <a href="#design" className="px-2.5 py-1 rounded-md hover:bg-white/[0.05] hover:text-white/70 transition-colors">
               Design
             </a>
-            <a href="#contact" className="hover:text-white/70 transition-colors">
+            <a href="#contact" className="px-2.5 py-1 rounded-md hover:bg-white/[0.05] hover:text-white/70 transition-colors">
               Contact
             </a>
           </nav>
@@ -212,7 +212,7 @@ export default function Home() {
                 </div>
 
                 {/* Inline Search & Sort */}
-                <div className="flex items-center gap-2 mt-3 mb-6">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 mt-3 mb-6">
                   <input
                     type="text"
                     placeholder="Search papers or tags..."

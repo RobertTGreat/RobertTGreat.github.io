@@ -364,7 +364,7 @@ export default function PaperReaderModal({
       <div className="relative z-[1] flex items-center justify-center w-full max-w-6xl h-[92vh]">
         {/* Table of Contents */}
         {toc.length > 0 && showToc ? (
-          <aside className="absolute right-full mr-4 top-0 z-[110] w-72 max-h-[85vh] bg-[#0a0a0a]/95 border border-white/15 rounded-2xl p-5 backdrop-blur-xl overflow-y-auto shadow-2xl transition-all duration-300">
+          <aside className="xl:absolute xl:right-full xl:mr-4 xl:top-0 max-xl:fixed max-xl:left-4 max-xl:top-16 max-xl:right-4 max-xl:sm:right-auto max-xl:sm:w-80 max-xl:max-h-[70vh] z-[150] bg-[#0a0a0a]/95 border border-white/15 rounded-2xl p-4 sm:p-5 backdrop-blur-2xl overflow-y-auto shadow-2xl transition-all duration-300">
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/10">
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-white/80 font-semibold">
                 <AlignLeft className="w-3.5 h-3.5" />
@@ -384,7 +384,11 @@ export default function PaperReaderModal({
                 <button
                   key={idx}
                   type="button"
-                  onClick={() => scrollToHeading(item.id)}
+                  onClick={() => {
+                    scrollToHeading(item.id);
+                    // Close mobile drawer on item tap if on small screens
+                    if (window.innerWidth < 1280) setShowToc(false);
+                  }}
                   className={`w-full text-left py-1.5 px-2.5 rounded-lg hover:bg-white/10 hover:text-white transition-all truncate cursor-pointer ${
                     item.level === 1
                       ? 'font-medium text-white text-xs bg-white/[0.04]'
@@ -403,20 +407,20 @@ export default function PaperReaderModal({
         {/* Reader Popup Container */}
         <div className="relative z-[1] w-full h-full flex flex-col bg-[#070707] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
           {/* Top Left Floating Controls */}
-          <div className="absolute top-4 left-4 sm:left-6 z-30 flex items-center gap-2">
+          <div className="absolute top-3 left-3 sm:top-4 sm:left-6 z-30 flex items-center gap-2">
             {toc.length > 0 ? (
               <button
                 type="button"
                 onClick={() => setShowToc(!showToc)}
                 title={showToc ? 'Hide Table of Contents' : 'Show Table of Contents'}
                 aria-label="Toggle Table of Contents"
-                className={`inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 bg-black/80 backdrop-blur-md transition-all cursor-pointer ${
+                className={`inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-white/10 bg-black/80 backdrop-blur-md transition-all cursor-pointer ${
                   showToc
                     ? 'text-white border-white/30 bg-white/10'
                     : 'text-white/70 hover:text-white hover:border-white/20'
                 }`}
               >
-                <AlignLeft className="w-5 h-5" />
+                <AlignLeft className="w-4 h-4 sm:w-5 sm:h-5" />
               </button>
             ) : null}
 
@@ -425,25 +429,25 @@ export default function PaperReaderModal({
               onClick={handleCopyShareLink}
               title={copied ? 'Link Copied' : 'Share Paper Link'}
               aria-label="Share paper link"
-              className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 bg-black/80 text-white/70 hover:text-white hover:border-white/20 backdrop-blur-md transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-white/10 bg-black/80 text-white/70 hover:text-white hover:border-white/20 backdrop-blur-md transition-colors cursor-pointer"
             >
               {copied ? (
-                <Check className="w-5 h-5 text-white animate-in fade-in" />
+                <Check className="w-4 h-4 sm:w-5 sm:h-5 text-white animate-in fade-in" />
               ) : (
-                <LinkIcon className="w-5 h-5 text-white/70" />
+                <LinkIcon className="w-4 h-4 sm:w-5 sm:h-5 text-white/70" />
               )}
             </button>
           </div>
 
           {/* Top Right Control */}
-          <div className="absolute top-4 right-4 sm:right-6 z-30">
+          <div className="absolute top-3 right-3 sm:top-4 sm:right-6 z-30">
             <button
               type="button"
               onClick={onClose}
-              className="inline-flex items-center justify-center w-10 h-10 rounded-xl border border-white/10 bg-black/80 text-white/70 hover:text-white hover:border-white/20 backdrop-blur-md transition-colors cursor-pointer"
+              className="inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl border border-white/10 bg-black/80 text-white/70 hover:text-white hover:border-white/20 backdrop-blur-md transition-colors cursor-pointer"
               aria-label="Close reader"
             >
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             </button>
           </div>
 
@@ -451,7 +455,7 @@ export default function PaperReaderModal({
           <div className="flex-1 flex overflow-hidden relative">
             <main
               ref={mainRef}
-              className="flex-1 overflow-y-auto px-6 sm:px-16 py-16 bg-[#050505] text-gray-200 scroll-smooth flex justify-center relative"
+              className="flex-1 overflow-y-auto px-4 sm:px-12 md:px-16 py-14 sm:py-16 bg-[#050505] text-gray-200 scroll-smooth flex justify-center relative"
             >
               {loading ? (
                 <div className="flex flex-col items-center justify-center h-full text-white/40 gap-3">
