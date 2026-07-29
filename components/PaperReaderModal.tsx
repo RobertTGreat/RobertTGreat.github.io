@@ -48,10 +48,7 @@ export default function PaperReaderModal({
           const level = match[1].length;
           const rawText = match[2].trim();
           const cleanText = rawText.replace(/[*_`]/g, '');
-          const id = cleanText
-            .toLowerCase()
-            .replace(/[^\w\s-]/g, '')
-            .replace(/\s+/g, '-');
+          const id = slugifyToId(cleanText);
           items.push({ id, text: cleanText, level });
         }
       });
@@ -63,6 +60,14 @@ export default function PaperReaderModal({
       setLoading(false);
     }
   }, []);
+
+  const slugifyToId = (text: string) => {
+    return text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+  };
 
   const handleCopyShareLink = () => {
     if (!paper) return;
@@ -212,11 +217,8 @@ export default function PaperReaderModal({
 
       if (line.startsWith('# ')) {
         const titleText = line.replace('# ', '').trim();
-        const id = titleText
-          .replace(/[*_`]/g, '')
-          .toLowerCase()
-          .replace(/[^\w\s-]/g, '')
-          .replace(/\s+/g, '-');
+        const cleanTitle = titleText.replace(/[*_`]/g, '');
+        const id = slugifyToId(cleanTitle);
         elements.push(
           <h1
             id={id}
@@ -228,11 +230,8 @@ export default function PaperReaderModal({
         );
       } else if (line.startsWith('## ')) {
         const titleText = line.replace('## ', '').trim();
-        const id = titleText
-          .replace(/[*_`]/g, '')
-          .toLowerCase()
-          .replace(/[^\w\s-]/g, '')
-          .replace(/\s+/g, '-');
+        const cleanTitle = titleText.replace(/[*_`]/g, '');
+        const id = slugifyToId(cleanTitle);
         elements.push(
           <h2
             id={id}
@@ -244,11 +243,8 @@ export default function PaperReaderModal({
         );
       } else if (line.startsWith('### ')) {
         const titleText = line.replace('### ', '').trim();
-        const id = titleText
-          .replace(/[*_`]/g, '')
-          .toLowerCase()
-          .replace(/[^\w\s-]/g, '')
-          .replace(/\s+/g, '-');
+        const cleanTitle = titleText.replace(/[*_`]/g, '');
+        const id = slugifyToId(cleanTitle);
         elements.push(
           <h3
             id={id}
