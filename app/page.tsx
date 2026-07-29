@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { Github, Mail, MapPin } from 'lucide-react';
+import { Github, Mail, MapPin, Search } from 'lucide-react';
 import StarryCanvas from '@/components/StarryCanvas';
 import SectionHeader from '@/components/SectionHeader';
 import ProjectCard from '@/components/ProjectCard';
@@ -9,6 +9,7 @@ import DesignCard from '@/components/DesignCard';
 import ConceptPaperCard from '@/components/ConceptPaperCard';
 import PaperReaderModal from '@/components/PaperReaderModal';
 import FontSwitcher from '@/components/FontSwitcher';
+import CommandPalette from '@/components/CommandPalette';
 import ChatCard from '@/components/pleiades/ChatCard';
 import BrowseCard from '@/components/pleiades/BrowseCard';
 import CoreCard from '@/components/pleiades/CoreCard';
@@ -26,6 +27,7 @@ export default function Home() {
   const [activePaper, setActivePaper] = useState<ConceptPaper | null>(null);
   const [paperSearch, setPaperSearch] = useState('');
   const [paperSort, setPaperSort] = useState<'newest' | 'title'>('newest');
+  const [searchOpen, setSearchOpen] = useState(false);
 
   // Handle URL deep-linking (e.g. ?paper=ashen-edge)
   useEffect(() => {
@@ -35,6 +37,18 @@ export default function Home() {
       const found = conceptPapers.find((p) => p.id === paperId);
       if (found) setActivePaper(found);
     }
+  }, []);
+
+  // Cmd+K / Ctrl+K keyboard shortcut listener
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        setSearchOpen((prev) => !prev);
+      }
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
 
   const filteredPapers = conceptPapers
@@ -57,6 +71,17 @@ export default function Home() {
 
   return (
     <div className="relative bg-[#010101] text-gray-200 font-sans selection:bg-white/20 selection:text-white">
+      {/* Top Left Floating Search Icon Button */}
+      <button
+        type="button"
+        onClick={() => setSearchOpen(true)}
+        title="Search papers & blogs (Cmd+K)"
+        aria-label="Open search command palette"
+        className="fixed top-3 left-3 sm:top-6 sm:left-6 z-[50] inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-black/80 border border-white/10 text-white/70 hover:text-white hover:border-white/20 backdrop-blur-md shadow-2xl transition-all cursor-pointer"
+      >
+        <Search className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+      </button>
+
       <FontSwitcher />
       <StarryCanvas />
 
@@ -313,6 +338,12 @@ export default function Home() {
         open={Boolean(activePaper)}
         onClose={() => setActivePaper(null)}
         paper={activePaper}
+      />
+
+      <CommandPalette
+        open={searchOpen}
+        onClose={() => setSearchOpen(false)}
+        onSelectPaper={(p) => setActivePaper(p)}
       />
     </div>
   );
