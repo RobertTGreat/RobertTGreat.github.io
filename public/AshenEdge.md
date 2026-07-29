@@ -1,4 +1,4 @@
-# Ashen Edge: Technical Architecture & Systemic Design Manual
+# Ashen Edge: Technical Design Paper
 
 ---
 
@@ -10,7 +10,7 @@ This paper defines the end-to-end game design, systemic interactions, mechanical
 
 ---
 
-## Section 1: Core Combat Pillars & System Foundations
+## 1. Core Combat Pillars & System Foundations
 
 ### 1.1 Core Pillars
 
@@ -27,7 +27,7 @@ Combat stability depends on two primary fluid resources: **Stamina** and **Poise
 
 ---
 
-## Section 2: Spatial Physics & Swept Collision Geometry
+## 2. Spatial Physics & Swept Collision Geometry
 
 Rather than utilizing static bounding boxes or frame-delayed physics colliders—which suffer from tunneling at high velocities—*Ashen Edge* executes spatial collision checks via **Continuous Swept Raycast Arrays**.
 
@@ -80,7 +80,7 @@ When an active weapon sweep intersects an entity, the spatial signal evaluates c
 
 ---
 
-## Section 3: Weapon Classifications & Anatomical Mechanics
+## 3. Weapon Classifications & Anatomical Mechanics
 
 ### 3.1 Sweetspot & Shaft Math
 
@@ -113,7 +113,7 @@ When swept raycasts intersect static environmental geometry (walls, pillars, low
 
 ---
 
-## Section 4: Advanced Combat Mechanics & Input Pipeline
+## 4. Advanced Combat Mechanics & Input Pipeline
 
 ### 4.1 Mass-Based Clashing vs. Binding Engine
 
@@ -177,7 +177,7 @@ $$\text{Effective Poise Cost} = \text{Base Cost} \times \left( \frac{1}{1 + (\te
 
 ---
 
-## Section 5: Structural Pitfall Mitigations
+## 5. Structural Pitfall Mitigations
 
 ---
 
@@ -224,7 +224,7 @@ $$\text{Effective Poise Cost} = \text{Base Cost} \times \left( \frac{1}{1 + (\te
 
 ---
 
-## Section 6: Hitstop & Frame Pacing Math
+## 6. Hitstop & Frame Pacing Math
 
 To convey structural weight without causing input delay or desynchronization:
 
@@ -247,7 +247,7 @@ Camera offset occurs along the **impact normal vector** of the swing:
 
 ---
 
-## Section 7: Modular Netcode Architecture (Theoretical Foundation)
+## 7. Modular Netcode Architecture (Theoretical Foundation)
 
 While *Ashen Edge* is built as a single-player engine, its system bus decouples rendering from physical logic to support future netcode integration.
 

@@ -68,7 +68,7 @@ export default function ConceptPaperCard(props: ConceptPaperCardProps) {
                 }`}
               >
                 <BookOpen className="w-3 h-3" />
-                {isPaper ? 'Concept Paper' : 'Blog'}
+                {isPaper ? 'Technical Paper' : 'Blog'}
               </span>
               {readTime ? (
                 <span className="text-[11px] font-mono text-white/40">

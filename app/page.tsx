@@ -77,9 +77,9 @@ export default function Home() {
         onClick={() => setSearchOpen(true)}
         title="Search papers & blogs (Cmd+K)"
         aria-label="Open search command palette"
-        className="fixed top-3 left-3 sm:top-6 sm:left-6 z-[50] inline-flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl bg-black/80 border border-white/10 text-white/70 hover:text-white hover:border-white/20 backdrop-blur-md shadow-2xl transition-all cursor-pointer"
+        className="fixed top-3 left-3 sm:top-6 sm:left-6 z-[50] inline-flex items-center justify-center w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black/65 border border-white/15 text-white/70 hover:text-white hover:border-white/25 backdrop-blur-2xl shadow-[0_16px_40px_rgba(0,0,0,0.8)] transition-all cursor-pointer"
       >
-        <Search className="w-4 h-4 sm:w-4.5 sm:h-4.5" />
+        <Search className="w-4 h-4 sm:w-5 sm:h-5" />
       </button>
 
       <FontSwitcher />
@@ -90,9 +90,6 @@ export default function Home() {
 
         {/* Hero */}
         <header className="w-full max-w-7xl mx-auto flex flex-col items-center py-12 sm:py-16 lg:py-24 text-center gap-5 sm:gap-6">
-          <p className="text-[10px] sm:text-[11px] font-mono uppercase tracking-[0.24em] sm:tracking-[0.28em] text-white/35">
-            Portfolio
-          </p>
           <h1 className="font-display text-4xl xs:text-5xl sm:text-7xl lg:text-8xl font-bold tracking-[0.1em] sm:tracking-[0.18em] text-white leading-none">
             ROBERT
           </h1>
@@ -120,10 +117,11 @@ export default function Home() {
               href={GITHUB}
               target="_blank"
               rel="noreferrer"
-              className="white-shine-btn p-3.5 sm:p-4 cursor-pointer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 sm:py-3 text-xs sm:text-sm font-medium text-white/50 hover:text-white border border-white/[0.08] hover:border-white/[0.16] rounded-lg bg-white/[0.02] hover:bg-white/[0.05] transition-all duration-300"
               aria-label="GitHub profile"
             >
-              <Github className="w-5 h-5 sm:w-6 sm:h-6" />
+              <Github className="w-4 h-4" />
+              github.com
             </a>
             <a
               href={PLEIADES}
@@ -232,7 +230,7 @@ export default function Home() {
               <section id="papers" className="scroll-mt-8">
                 <div>
                   <h2 className="font-display text-3xl sm:text-4xl font-bold tracking-tight text-white mb-3">
-                    Blogs & Papers
+                    Blogs & Technical Papers
                   </h2>
                 </div>
 

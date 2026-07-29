@@ -154,7 +154,7 @@ export default function CommandPalette({
                 : 'text-white/40 hover:text-white/70'
             }`}
           >
-            Papers
+            Technical Papers
           </button>
           <button
             type="button"
@@ -188,7 +188,7 @@ export default function CommandPalette({
                   <div className="flex items-center gap-2">
                     <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[9px] font-mono rounded uppercase tracking-wider bg-white/[0.06] text-white/60 border border-white/10">
                       <BookOpen className="w-2.5 h-2.5" />
-                      {paper.type === 'blog' ? 'Blog' : 'Paper'}
+                      {paper.type === 'blog' ? 'Blog' : 'Technical Paper'}
                     </span>
                     {paper.readTime ? (
                       <span className="text-[10px] font-mono text-white/40">• {paper.readTime}</span>
@@ -227,15 +227,6 @@ export default function CommandPalette({
               ) : null}
             </div>
           )}
-        </div>
-
-        {/* Footer shortcuts */}
-        <div className="px-4 py-2 bg-black/60 border-t border-white/5 flex items-center justify-between text-[10px] font-mono text-white/30">
-          <div className="flex items-center gap-3">
-            <span><kbd className="px-1 py-0.5 bg-white/10 rounded">↑↓</kbd> Navigate</span>
-            <span><kbd className="px-1 py-0.5 bg-white/10 rounded">↵</kbd> Select</span>
-          </div>
-          <span>{filtered.length} results</span>
         </div>
       </div>
     </div>,

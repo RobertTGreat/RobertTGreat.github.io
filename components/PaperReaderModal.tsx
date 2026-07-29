@@ -362,10 +362,10 @@ export default function PaperReaderModal({
 
       {/* Centered Modal Wrapper containing floating outside ToC + main reader box */}
       <div className="relative z-[1] flex items-center justify-center w-full max-w-6xl h-[92vh]">
-        {/* Table of Contents */}
+        {/* Table of Contents - Always Fits On Screen */}
         {toc.length > 0 && showToc ? (
-          <aside className="xl:absolute xl:right-full xl:mr-4 xl:top-0 max-xl:fixed max-xl:left-4 max-xl:top-16 max-xl:right-4 max-xl:sm:right-auto max-xl:sm:w-80 max-xl:max-h-[70vh] z-[150] bg-black/65 border border-white/15 rounded-2xl p-4 sm:p-5 backdrop-blur-2xl overflow-y-auto shadow-[0_16px_40px_rgba(0,0,0,0.8)] transition-all duration-300">
-            <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/10">
+          <aside className="fixed left-4 top-16 sm:left-6 sm:top-20 z-[150] w-[calc(100vw-2rem)] sm:w-80 max-h-[calc(100vh-6rem)] bg-black/80 border border-white/15 rounded-2xl p-4 sm:p-5 backdrop-blur-2xl overflow-y-auto shadow-[0_16px_50px_rgba(0,0,0,0.9)] transition-all duration-300">
+            <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/10 sticky top-0 bg-transparent backdrop-blur-md z-10">
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-white/80 font-semibold">
                 <AlignLeft className="w-3.5 h-3.5" />
                 Table of Contents
@@ -374,6 +374,7 @@ export default function PaperReaderModal({
                 type="button"
                 onClick={() => setShowToc(false)}
                 className="text-white/40 hover:text-white p-1 cursor-pointer"
+                aria-label="Close Table of Contents"
               >
                 <X className="w-4 h-4" />
               </button>
@@ -386,8 +387,8 @@ export default function PaperReaderModal({
                   type="button"
                   onClick={() => {
                     scrollToHeading(item.id);
-                    // Close mobile drawer on item tap if on small screens
-                    if (window.innerWidth < 1280) setShowToc(false);
+                    // Close drawer on tap
+                    setShowToc(false);
                   }}
                   className={`w-full text-left py-1.5 px-2.5 rounded-lg hover:bg-white/10 hover:text-white transition-all truncate cursor-pointer ${
                     item.level === 1
@@ -440,7 +441,7 @@ export default function PaperReaderModal({
           </div>
 
           {/* Top Right Control */}
-          <div className="absolute top-3 right-3 sm:top-4 sm:right-6 z-30">
+          <div className="absolute top-3 right-14 sm:top-4 sm:right-20 z-30">
             <button
               type="button"
               onClick={onClose}
@@ -944,6 +945,66 @@ function renderVisualFlowchart(code: string): React.ReactNode {
               <li>• Server Rewind (Tick minus Latency)</li>
               <li>• Snapshot Reconciliation Pass</li>
             </ul>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Diagram 5: Universal Rich Presence (ULP) Architecture
+  if (code.includes('ULP IPC DAEMON') || code.includes('ULP Schema Payload') || code.includes('ULP Payload Stream')) {
+    return (
+      <div className="flex flex-col items-center min-w-[680px] py-2">
+        {/* Top Node */}
+        <div className="px-5 py-2.5 rounded-xl bg-white/[0.05] border border-white/15 text-white/90 font-mono text-xs font-semibold uppercase tracking-wider">
+          GAME / APP / MEDIA PLAYER
+        </div>
+
+        {/* Payload Stream Badge */}
+        <div className="flex flex-col items-center">
+          <div className="w-[1.5px] h-4 bg-white/30" />
+          <div className="px-2.5 py-0.5 rounded-md bg-white/[0.06] border border-white/10 text-[10px] font-mono text-white/60">
+            ULP Payload Stream (JSON / Sockets)
+          </div>
+          <div className="w-[1.5px] h-4 bg-white/30" />
+        </div>
+
+        {/* Bus Node */}
+        <div className="px-6 py-3 rounded-xl bg-white/[0.07] border border-white/20 text-white font-mono text-xs font-bold uppercase tracking-wider shadow-lg">
+          LOCAL ULP IPC DAEMON / BUS
+        </div>
+
+        {/* 4-Way Branch Connector — gap-4 = 16px */}
+        <BranchConnector cols={4} gap={16} />
+
+        {/* 4 Destination Clients */}
+        <div className="w-full grid grid-cols-4 gap-4">
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2 text-center">
+            <div className="text-xs font-mono font-bold text-white/90 bg-white/[0.06] px-2.5 py-1 rounded-lg inline-block border border-white/10">
+              DISCORD
+            </div>
+            <p className="text-[11px] font-mono text-white/50">Local RPC Pipe</p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2 text-center">
+            <div className="text-xs font-mono font-bold text-white/90 bg-white/[0.06] px-2.5 py-1 rounded-lg inline-block border border-white/10">
+              REVOLT
+            </div>
+            <p className="text-[11px] font-mono text-white/50">Native WebSocket</p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2 text-center">
+            <div className="text-xs font-mono font-bold text-white/90 bg-white/[0.06] px-2.5 py-1 rounded-lg inline-block border border-white/10">
+              MATRIX
+            </div>
+            <p className="text-[11px] font-mono text-white/50">Bridge Adapter</p>
+          </div>
+
+          <div className="p-4 rounded-xl bg-white/[0.02] border border-white/10 space-y-2 text-center">
+            <div className="text-xs font-mono font-bold text-white/90 bg-white/[0.06] px-2.5 py-1 rounded-lg inline-block border border-white/10">
+              CUSTOM DISPLAY
+            </div>
+            <p className="text-[11px] font-mono text-white/50">Local Dashboards</p>
           </div>
         </div>
       </div>
