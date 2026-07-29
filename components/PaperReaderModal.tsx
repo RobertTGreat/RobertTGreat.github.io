@@ -2,7 +2,7 @@
 
 import { useEffect, useState, useCallback, useRef } from 'react';
 import { createPortal } from 'react-dom';
-import { X, AlignLeft } from 'lucide-react';
+import { X, AlignLeft, Link as LinkIcon, Check } from 'lucide-react';
 import type { ConceptPaper } from '@/data/concept-papers';
 
 type PaperReaderModalProps = {
@@ -27,6 +27,7 @@ export default function PaperReaderModal({
   const [error, setError] = useState<string | null>(null);
   const [toc, setToc] = useState<TocItem[]>([]);
   const [showTocMobile, setShowTocMobile] = useState<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
   const mainRef = useRef<HTMLElement>(null);
 
   const fetchPaper = useCallback(async (fileUrl: string) => {
@@ -63,6 +64,15 @@ export default function PaperReaderModal({
     }
   }, []);
 
+  const handleCopyShareLink = () => {
+    if (!paper) return;
+    const url = new URL(window.location.href);
+    url.searchParams.set('paper', paper.id);
+    navigator.clipboard.writeText(url.toString());
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   useEffect(() => {
     if (open && paper) {
       fetchPaper(paper.fileUrl);
@@ -90,9 +100,12 @@ export default function PaperReaderModal({
 
   const scrollToHeading = (id: string) => {
     if (!mainRef.current) return;
-    const target = mainRef.current.querySelector(`#${id}`);
+    const target = mainRef.current.querySelector(`#${id}`) as HTMLElement | null;
     if (target) {
-      target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const containerTop = mainRef.current.getBoundingClientRect().top;
+      const targetTop = target.getBoundingClientRect().top;
+      const relativeTop = targetTop - containerTop + mainRef.current.scrollTop;
+      mainRef.current.scrollTo({ top: relativeTop - 20, behavior: 'smooth' });
       setShowTocMobile(false);
     }
   };
@@ -321,7 +334,25 @@ export default function PaperReaderModal({
       {/* Reader Popup Container */}
       <div className="relative z-[1] w-full max-w-7xl h-[92vh] flex flex-col bg-[#070707] border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
         {/* Floating Top Control Row */}
-        <div className="absolute top-4 right-4 sm:right-6 z-30 flex items-center gap-3">
+        <div className="absolute top-4 right-4 sm:right-6 z-30 flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            onClick={handleCopyShareLink}
+            className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl border border-white/10 bg-black/80 text-xs font-mono text-white/80 hover:text-white backdrop-blur-md transition-colors cursor-pointer"
+          >
+            {copied ? (
+              <>
+                <Check className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Link Copied</span>
+              </>
+            ) : (
+              <>
+                <LinkIcon className="w-3.5 h-3.5 text-white/60" />
+                <span>Share</span>
+              </>
+            )}
+          </button>
+
           {toc.length > 0 ? (
             <button
               type="button"

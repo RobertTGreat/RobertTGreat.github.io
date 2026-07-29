@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Github, Mail, MapPin } from 'lucide-react';
 import StarryCanvas from '@/components/StarryCanvas';
 import SectionHeader from '@/components/SectionHeader';
@@ -26,6 +26,16 @@ export default function Home() {
   const [activePaper, setActivePaper] = useState<ConceptPaper | null>(null);
   const [paperSearch, setPaperSearch] = useState('');
   const [paperSort, setPaperSort] = useState<'newest' | 'title'>('newest');
+
+  // Handle URL deep-linking (e.g. ?paper=ashen-edge)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const paperId = params.get('paper');
+    if (paperId) {
+      const found = conceptPapers.find((p) => p.id === paperId);
+      if (found) setActivePaper(found);
+    }
+  }, []);
 
   const filteredPapers = conceptPapers
     .filter((paper) => {
