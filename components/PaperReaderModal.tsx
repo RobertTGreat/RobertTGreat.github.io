@@ -30,6 +30,14 @@ export default function PaperReaderModal({
   const [copied, setCopied] = useState<boolean>(false);
   const mainRef = useRef<HTMLElement>(null);
 
+  const slugifyToId = (text: string) => {
+    return text
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-');
+  };
+
   const fetchPaper = useCallback(async (fileUrl: string) => {
     setLoading(true);
     setError(null);
@@ -60,14 +68,6 @@ export default function PaperReaderModal({
       setLoading(false);
     }
   }, []);
-
-  const slugifyToId = (text: string) => {
-    return text
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '')
-      .trim()
-      .replace(/\s+/g, '-');
-  };
 
   const handleCopyShareLink = () => {
     if (!paper) return;
