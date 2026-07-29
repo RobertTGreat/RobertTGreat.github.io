@@ -364,7 +364,7 @@ export default function PaperReaderModal({
       <div className="relative z-[1] flex items-center justify-center w-full max-w-6xl h-[92vh]">
         {/* Table of Contents */}
         {toc.length > 0 && showToc ? (
-          <aside className="xl:absolute xl:right-full xl:mr-4 xl:top-0 max-xl:fixed max-xl:left-4 max-xl:top-16 max-xl:right-4 max-xl:sm:right-auto max-xl:sm:w-80 max-xl:max-h-[70vh] z-[150] bg-[#0a0a0a]/95 border border-white/15 rounded-2xl p-4 sm:p-5 backdrop-blur-2xl overflow-y-auto shadow-2xl transition-all duration-300">
+          <aside className="xl:absolute xl:right-full xl:mr-4 xl:top-0 max-xl:fixed max-xl:left-4 max-xl:top-16 max-xl:right-4 max-xl:sm:right-auto max-xl:sm:w-80 max-xl:max-h-[70vh] z-[150] bg-black/65 border border-white/15 rounded-2xl p-4 sm:p-5 backdrop-blur-2xl overflow-y-auto shadow-[0_16px_40px_rgba(0,0,0,0.8)] transition-all duration-300">
             <div className="flex items-center justify-between mb-4 pb-2 border-b border-white/10">
               <div className="flex items-center gap-2 text-xs font-mono uppercase tracking-widest text-white/80 font-semibold">
                 <AlignLeft className="w-3.5 h-3.5" />
