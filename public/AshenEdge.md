@@ -33,7 +33,7 @@ Rather than utilizing static bounding boxes or frame-delayed physics colliders�
 
 ---
 
-```
+```diagram
                        ATTACK INITIATION (Active Frames)
                                        │
                                        ▼
@@ -41,13 +41,12 @@ Rather than utilizing static bounding boxes or frame-delayed physics colliders�
                                        │
             ┌──────────────────────────┼──────────────────────────┐
             ▼                          ▼                          ▼
- [ ENCOUNTER ENEMY PARRY ]   [ ENCOUNTER ENEMY BODY ]   [ ENCOUNTER ENVIRONMENT ]
+ [ ENCOUNTER ENEMY PARRY ]   [ ENCOUNTER ENEMY BODY  ]   [ ENCOUNTER ENVIRONMENT ]
             │                          │                          │
             ▼                          ▼                          ▼
   Evaluate Frame Window       Calculate Hit Location     Apply Wall Drag Friction
   - Tier 3: Parry Match       - Tip vs. Shaft Ratio      - Reduce Swing Velocity
   - Tier 2: Block Absorb      - Procedural IK Recoil     - Scale Hit Damage Down
-
 ```
 
 ---
@@ -141,12 +140,11 @@ $$\text{Leverage Ratio} = \frac{\text{Mass}_{\text{Attacker A}} \times \text{Str
 
 To allow psychological feints without introducing phantom parry vulnerabilities, attack animations are structured into strict lifecycle frames:
 
-```
-[ Phase 1: Morph / Feint Window ] ──► [ Phase 2: Point of No Return ] ──► [ Phase 3: Active Swing ]
-  (0% to 45% Windup Duration)           (46% to 59% Windup Duration)        (60% to 100% Active)
-  - Morphing permitted                  - Attack animation committed       - Swept raycasts ACTIVE
-  - Directional guard switch allowed    - Telegraph visuals locked         - Signals emit on contact
-
+```diagram
+[ Phase 1: Morph / Feint Window ] ──► [ Phase 2: Point of No Return  ] ──► [    Phase 3: Active Swing    ]
+   (0% to 45% Windup Duration)           (46% to 59% Windup Duration)             (60% to 100% Active)
+   - Morphing permitted                  - Attack animation committed         - Swept raycasts ACTIVE
+   - Directional guard switch allowed    - Telegraph visuals locked           - Signals emit on contact
 ```
 
 #### Prevention of Phantom Parries:
@@ -183,7 +181,7 @@ $$\text{Effective Poise Cost} = \text{Base Cost} \times \left( \frac{1}{1 + (\te
 
 ---
 
-```
+```diagram
                        HARDWARE INPUT RECEIVED
                                   │
                                   ▼
@@ -191,15 +189,14 @@ $$\text{Effective Poise Cost} = \text{Base Cost} \times \left( \frac{1}{1 + (\te
                                   │
                  ┌────────────────┴────────────────┐
                  ▼                                 ▼
-               [ YES ]                           [ NO ]
+              [ YES ]                           [ NO ]
                  │                                 │
                  ▼                                 ▼
-   Store in Priority Queue               Pass to Motion Engine
-   (Raw Hardware Engine Time)            - Instant execution
+      Store in Priority Queue               Pass to Motion Engine
+    (Raw Hardware Engine Time)            - Instant execution
                  │
                  ▼ (Hitstop Expires)
    Flush Highest Priority Action
-
 ```
 
 ---
@@ -254,7 +251,7 @@ Camera offset occurs along the **impact normal vector** of the swing:
 
 While *Ashen Edge* is built as a single-player engine, its system bus decouples rendering from physical logic to support future netcode integration.
 
-```
+```diagram
                            CLIENT HARDWARE INPUT
                                      │
                                      ▼
@@ -262,18 +259,17 @@ While *Ashen Edge* is built as a single-player engine, its system bus decouples 
                                      │
                   ┌──────────────────┴──────────────────┐
                   ▼                                     ▼
-      [ SINGLEPLAYER ROUTE ]                [ THEORETICAL NETCODE ROUTE ]
-      - Direct Hitstop Execution            - Timestamp Payload Serialized
-      - Local IK Recoil Application         - Server Rewind (Tick minus Latency)
-      - Instant State Resolution            - Snapshot Reconciliation Pass
-
+       [ SINGLEPLAYER ROUTE ]                [ THEORETICAL NETCODE ROUTE ]
+       - Direct Hitstop Execution            - Timestamp Payload Serialized
+       - Local IK Recoil Application         - Server Rewind (Tick minus Latency)
+       - Instant State Resolution            - Snapshot Reconciliation Pass
 ```
 
 ### Decoupled State Messaging
 
 All combat signals pass as immutable data structures containing spatial vectors, frame ticks, and stance states:
 
-```
+```struct
 STRUCT CombatStateSnapshot:
     Field FrameTick        : Unsigned 32-bit Integer
     Field EntityID         : 64-bit UUID
